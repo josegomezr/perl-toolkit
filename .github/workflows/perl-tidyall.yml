@@ -1,0 +1,51 @@
+name: TidyAll
+
+on:
+  workflow_call:
+    inputs:
+      # working-directory is added to accommodate monorepo.  For multi repo, defaults to '.', current directory
+      working-directory:
+        required: false
+        type: string
+        default: '.'
+      tidyall-args:
+        required: false
+        type: string
+        default: '--all --check'
+      prepend-perl5lib-env:
+        required: false
+        type: string
+        default: ''
+
+jobs:
+  tidyall:
+    runs-on: ubuntu-latest
+    # accommodating monorepo, this sets the working directory at the job level, for multi repo, defaults to "."
+    defaults:
+      run:
+        working-directory: ${{ inputs.working-directory }}
+
+    container:
+      image: registry.opensuse.org/home/josegomezr/perl-toolkit/containers-tw/tester-perl:latest
+
+    # run release flow only if the triggering branch starts with "release/"
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies with cpanm
+        run: |
+            if [[ -f cpanfile ]]; then
+              cpanm --installdeps . --with-develop --notest
+            fi
+
+      - name: Run tidyalll
+        run: |
+          ADDITIONAL_PER5LIB=${{ inputs.working-directory }}
+
+          TIDYALL_ARGS=${{ inputs.tidyall-args }};
+          if [[ "x$ADDITIONAL_PER5LIB" != "x" ]]; then
+            export PERL5LIB="${ADDITIONAL_PER5LIB}:${PERL5LIB}"
+          fi
+
+          tidyall $TIDYALL_ARGS

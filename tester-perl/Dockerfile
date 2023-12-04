@@ -32,7 +32,7 @@ RUN bash -c "test '$RELEASE' == '<''RELEASE''>'" \
     \
     || true
 
-RUN zypper -qn in -y --capability 'perl(Devel::Cover)' \
+RUN zypper -qn in -y --capability 'perl(Code::TidyAll)' 'perl(Devel::Cover)' \
     'perl(Devel::Cover::Report::Codecov)' \
     'perl(Devel::Cover::Report::Coveralls)' \
     'perl(File::Temp)' 'perl(List::MoreUtils)' 'perl(Module::Build)' \
