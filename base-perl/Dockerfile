@@ -1,3 +1,6 @@
+# Built in OBS in: https://build.opensuse.org/package/show/home:josegomezr:perl-toolkit/base-perl
+# available for pulling at: registry.opensuse.org/home/josegomezr/perl-toolkit/containers-tw/base-perl:latest
+
 #!BuildTag: base-perl
 #!UseOBSRepositories
 FROM opensuse/tumbleweed
