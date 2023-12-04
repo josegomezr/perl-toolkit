@@ -1,4 +1,4 @@
-name: TidyAll
+name: Perlcritic
 
 on:
   workflow_call:
@@ -8,17 +8,17 @@ on:
         required: false
         type: string
         default: '.'
-      tidyall-args:
+      perl-critic-args:
         required: false
         type: string
-        default: '--all --check'
+        default: '.'
       prepend-perl5lib-env:
         required: false
         type: string
         default: ''
 
 jobs:
-  tidyall:
+  perlcritic:
     runs-on: ubuntu-latest
     # accommodating monorepo, this sets the working directory at the job level, for multi repo, defaults to "."
     defaults:
@@ -39,13 +39,13 @@ jobs:
               cpanm --installdeps . --with-develop --notest
             fi
 
-      - name: Run tidyall
+      - name: Run perlcritic
         run: |
-          ADDITIONAL_PER5LIB="${{ inputs.working-directory }}"
+          PERLCRITIC_ARGS="${{ inputs.perl-critic-args }}"
 
-          TIDYALL_ARGS="${{ inputs.tidyall-args }}"
+          ADDITIONAL_PER5LIB="${{ inputs.working-directory }}"
           if [[ "x$ADDITIONAL_PER5LIB" != "x" ]]; then
             export PERL5LIB="${ADDITIONAL_PER5LIB}:${PERL5LIB}"
           fi
 
-          tidyall $TIDYALL_ARGS
+          perlcritic $PERLCRITIC_ARGS
