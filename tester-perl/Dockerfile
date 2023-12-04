@@ -15,17 +15,19 @@
 # --build-arg IMAGE_BASE=%image-name%
 
 ARG IMAGE_BASE=base-perl:latest
-ARG RELEASE=<RELEASE>
 FROM $IMAGE_BASE
+ARG RELEASE="<RELEASE>"
 
 # Heavily inspired in: https://hub.docker.com/r/perldocker/perl-tester/
 # although not all dependencies listed there are available in d-l-perl repo.
 
-# if runnning outside OBS, add d-l-perl repo
-RUN test "$RELEASE" -eq "<RELEASE>" \
+# just a clever self-baked trick to check if runnning outside OBS.
+# When not running in OBS, add d-l-perl repo
+
+RUN bash -c "test '$RELEASE' == '<''RELEASE''>'" \
     && ( \
-        zypper ar --enable --refresh --check https://download.opensuse.org/repositories/devel:/languages:/perl/openSUSE_Tumbleweed/devel:languages:perl.repo \
-        zypper --gpg-auto-import-keys ref \
+        zypper -qn ar --enable https://download.opensuse.org/repositories/devel:/languages:/perl/openSUSE_Tumbleweed/devel:languages:perl.repo \
+        && zypper -qn --gpg-auto-import-keys ref \
         ) \
     \
     || true
