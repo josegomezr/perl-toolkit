@@ -33,6 +33,10 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      - name: Install Problem Matcher
+        run: |
+            echo "::add-matcher::$GITHUB_WORKSPACE/.github/perl-problem-matcher.json"
+
       - name: Install dependencies with cpanm
         run: |
             if [[ -f cpanfile ]]; then
@@ -48,4 +52,5 @@ jobs:
             export PERL5LIB="${ADDITIONAL_PER5LIB}:${PERL5LIB}"
           fi
 
+          echo "Running: perlcritic $PERLCRITIC_ARGS"
           perlcritic $PERLCRITIC_ARGS

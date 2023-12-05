@@ -16,6 +16,10 @@ on:
         required: false
         type: string
         default: ''
+      tidyall-executable:
+        required: false
+        type: string
+        default: 'tidyall'
 
 jobs:
   tidyall:
@@ -33,6 +37,10 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      - name: Install Problem Matcher
+        run: |
+            echo "::add-matcher::$GITHUB_WORKSPACE/.github/perl-problem-matcher.json"
+
       - name: Install dependencies with cpanm
         run: |
             if [[ -f cpanfile ]]; then
@@ -42,10 +50,12 @@ jobs:
       - name: Run tidyall
         run: |
           ADDITIONAL_PER5LIB="${{ inputs.working-directory }}"
+          TIDYALL_BIN="${{ inputs.tidyall-executable }}"
 
           TIDYALL_ARGS="${{ inputs.tidyall-args }}"
           if [[ "x$ADDITIONAL_PER5LIB" != "x" ]]; then
             export PERL5LIB="${ADDITIONAL_PER5LIB}:${PERL5LIB}"
           fi
 
-          tidyall $TIDYALL_ARGS
+          echo "Running: $TIDYALL_BIN $TIDYALL_ARGS"
+          $TIDYALL_BIN $TIDYALL_ARGS
