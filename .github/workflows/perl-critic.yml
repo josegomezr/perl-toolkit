@@ -11,7 +11,7 @@ on:
       perl-critic-args:
         required: false
         type: string
-        default: '.'
+        default: '--quiet .'
       prepend-perl5lib-env:
         required: false
         type: string

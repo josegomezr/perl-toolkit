@@ -33,6 +33,9 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      - name: Install problem matcher
+        uses: docker://registry.opensuse.org/home/josegomezr/perl-toolkit/containers-tw/gha-perl-problem-matcher:latest
+
       - name: Install dependencies with cpanm
         run: |
             if [[ -f cpanfile ]]; then

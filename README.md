@@ -46,7 +46,7 @@ Workflows
 - **Inputs:**
     * `working-directory`: Current working directory. Defaults to `.`.
 
-    * `perl-critic-args`: Args for `perlcritic` invocation. Defaults to `.`.
+    * `perl-critic-args`: Args for `perlcritic` invocation. Defaults to `--quiet .`.
 
     * `prepend-perl5lib-env`: Extra load paths to add for `perlcritic`
       invocation.
@@ -55,8 +55,11 @@ Workflows
       for projects where `perlcritic` calls are wrapped into other script
       (like a `make` command).
 
+### [./gh-action-problem-matcher][wf-gh-action-problem-matcher]: Perl problem matcher
+
 [obs]: https://openbuildservice.org/
 [obs-proj]: https://build.opensuse.org/package/show/home:josegomezr:perl-toolkit/base-perl
 [wf-tidyall.yml]: .github/workflows/perl-tidyall.yml
 [wf-prove.yml]: .github/workflows/perl-prove.yml
 [wf-perlcritic.yml]: .github/workflows/perl-critic.yml
+[wf-gh-action-problem-matcher]: ./gh-action-problem-matcher
