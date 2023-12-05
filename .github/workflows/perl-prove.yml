@@ -1,0 +1,57 @@
+name: TidyAll
+
+on:
+  workflow_call:
+    inputs:
+      # working-directory is added to accommodate monorepo.  For multi repo, defaults to '.', current directory
+      working-directory:
+        required: false
+        type: string
+        default: '.'
+      prove-args:
+        required: false
+        type: string
+        default: '-lm'
+      prepend-perl5lib-env:
+        required: false
+        type: string
+        default: ''
+
+jobs:
+  prove:
+    runs-on: ubuntu-latest
+    # accommodating monorepo, this sets the working directory at the job level, for multi repo, defaults to "."
+    defaults:
+      run:
+        working-directory: "${{ inputs.working-directory }}"
+
+    container:
+      image: registry.opensuse.org/home/josegomezr/perl-toolkit/containers-tw/tester-perl:latest
+
+    # run release flow only if the triggering branch starts with "release/"
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install Problem Matcher
+        run: |
+            echo "::add-matcher::$GITHUB_WORKSPACE/.github/perl-problem-matcher.json"
+
+      - name: Install dependencies with cpanm
+        run: |
+            if [[ -f cpanfile ]]; then
+              cpanm --installdeps . --with-develop --notest
+            fi
+
+      - name: Run tidyall
+        run: |
+          ADDITIONAL_PER5LIB="${{ inputs.working-directory }}"
+
+          PROVE_ARGS="${{ inputs.prove-args }}"
+          if [[ "x$ADDITIONAL_PER5LIB" != "x" ]]; then
+            export PERL5LIB="${ADDITIONAL_PER5LIB}:${PERL5LIB}"
+          fi
+
+          echo "Running: tidyall $PROVE_ARGS"
+
+          prove $PROVE_ARGS
