@@ -43,7 +43,8 @@ RUN zypper -qn in -y --capability 'perl(Code::TidyAll)' 'perl(Devel::Cover)' \
     'perl(Test::Differences)' 'perl(Test::EOL)' 'perl(Test::Fatal)' \
     'perl(Test::MinimumVersion)' 'perl(Test::MockModule)' \
     'perl(Test::Most)' 'perl(Test::More)' \
-    'perl(Test::Needs)' 'perl(Test::Pod)' 'perl(Test::Pod::Coverage)' \
-    'perl(Test::Portability::Files)' 'perl(Test::RequiresInternet)' \
-    'perl(Test::Spelling)' 'perl(Test::Synopsis)' 'perl(Test::Version)' \
+    'perl(Test::Needs)' 'perl(Perl::Critic)' 'perl(Test::Pod)' \
+    'perl(Test::Pod::Coverage)' 'perl(Test::Portability::Files)' \
+    'perl(Test::RequiresInternet)' 'perl(Test::Spelling)' \
+    'perl(Test::Synopsis)' 'perl(Test::Version)' \
     'perl(Test::Warnings)' 'perl(Pod::Readme)' 'perl(Dist::Zilla)'
