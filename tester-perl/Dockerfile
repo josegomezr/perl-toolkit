@@ -36,7 +36,9 @@ RUN zypper -qn in -y --capability 'perl(Code::TidyAll)' 'perl(Devel::Cover)' \
     'perl(Devel::Cover::Report::Codecov)' \
     'perl(Devel::Cover::Report::Coveralls)' \
     'perl(File::Temp)' 'perl(List::MoreUtils)' 'perl(Module::Build)' \
-    'perl(Pod::Coverage::TrustPod)' 'perl(Test2::Bundle::Extended)' \
+    'perl(Pod::Coverage::TrustPod)' \
+    'perl(TAP::Formatter::GitHubActions)' \
+    'perl(Test2::Bundle::Extended)' \
     'perl(Test2::Plugin::NoWarnings)' 'perl(Test2::Suite)' \
     'perl(Test2::Tools::Explain)' 'perl(Test::Builder)' \
     'perl(Test::CPAN::Meta)' 'perl(Test::Deep)' \
