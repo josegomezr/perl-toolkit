@@ -27,6 +27,7 @@ ARG RELEASE="<RELEASE>"
 RUN bash -c "test '$RELEASE' == '<''RELEASE''>'" \
     && ( \
         zypper -qn ar --enable https://download.opensuse.org/repositories/devel:/languages:/perl/openSUSE_Tumbleweed/devel:languages:perl.repo \
+        zypper -qn ar --enable https://download.opensuse.org/repositories/home:/josegomezr:/perl-toolkit/openSUSE_Tumbleweed/home:josegomezr:perl-toolkit.repo \
         && zypper -qn --gpg-auto-import-keys ref \
         ) \
     \
@@ -50,3 +51,8 @@ RUN zypper -qn in -y --capability 'perl(Code::TidyAll)' 'perl(Devel::Cover)' \
     'perl(Test::RequiresInternet)' 'perl(Test::Spelling)' \
     'perl(Test::Synopsis)' 'perl(Test::Version)' \
     'perl(Test::Warnings)' 'perl(Pod::Readme)' 'perl(Dist::Zilla)'
+
+COPY artifacts/entrypoint.sh /entrypoint.sh
+COPY artifacts/perl-problem-matcher.json /usr/share/gh-actions/perl-problem-matcher.json
+
+ENTRYPOINT ["/entrypoint.sh"]
