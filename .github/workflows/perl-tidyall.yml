@@ -29,22 +29,23 @@ jobs:
       run:
         working-directory: "${{ inputs.working-directory }}"
 
-    container:
-      image: registry.opensuse.org/home/josegomezr/perl-toolkit/containers-tw/tester-perl:latest
-
     # run release flow only if the triggering branch starts with "release/"
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
       - name: Install dependencies with cpanm
-        run: |
+        uses: docker://registry.opensuse.org/home/josegomezr/perl-toolkit/containers-tw/tester-perl:latest
+        with:
+          args: |
             if [[ -f cpanfile ]]; then
               cpanm --installdeps . --with-develop --notest
             fi
 
       - name: Run tidyall
-        run: |
+        uses: docker://registry.opensuse.org/home/josegomezr/perl-toolkit/containers-tw/tester-perl:latest
+        with:
+          args: |
           ADDITIONAL_PER5LIB="${{ inputs.working-directory }}"
           TIDYALL_BIN="${{ inputs.tidyall-executable }}"
 
