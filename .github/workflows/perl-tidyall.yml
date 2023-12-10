@@ -46,13 +46,13 @@ jobs:
         uses: docker://registry.opensuse.org/home/josegomezr/perl-toolkit/containers-tw/tester-perl:latest
         with:
           args: |
-          ADDITIONAL_PER5LIB="${{ inputs.working-directory }}"
-          TIDYALL_BIN="${{ inputs.tidyall-executable }}"
+            ADDITIONAL_PER5LIB="${{ inputs.working-directory }}"
+            TIDYALL_BIN="${{ inputs.tidyall-executable }}"
 
-          TIDYALL_ARGS="${{ inputs.tidyall-args }}"
-          if [[ "x$ADDITIONAL_PER5LIB" != "x" ]]; then
-            export PERL5LIB="${ADDITIONAL_PER5LIB}:${PERL5LIB}"
-          fi
+            TIDYALL_ARGS="${{ inputs.tidyall-args }}"
+            if [[ "x$ADDITIONAL_PER5LIB" != "x" ]]; then
+              export PERL5LIB="${ADDITIONAL_PER5LIB}:${PERL5LIB}"
+            fi
 
-          echo "Running: $TIDYALL_BIN $TIDYALL_ARGS"
-          $TIDYALL_BIN $TIDYALL_ARGS
+            echo "Running: $TIDYALL_BIN $TIDYALL_ARGS"
+            $TIDYALL_BIN $TIDYALL_ARGS
