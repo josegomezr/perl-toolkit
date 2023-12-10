@@ -8,10 +8,14 @@ on:
         required: false
         type: string
         default: '.'
-      prove-args:
+      build-pl-args:
         required: false
         type: string
-        default: '-lm'
+        default: ''
+      build-pl-test-args:
+        required: false
+        type: string
+        default: ''
       prepend-perl5lib-env:
         required: false
         type: string
@@ -44,12 +48,9 @@ jobs:
           args: |
             ADDITIONAL_PER5LIB="${{ inputs.prepend-perl5lib-env }}"
 
-            PROVE_ARGS="${{ inputs.prove-args }}"
             if [[ "x$ADDITIONAL_PER5LIB" != "x" ]]; then
               export PERL5LIB="${ADDITIONAL_PER5LIB}:${PERL5LIB}"
             fi
 
-            echo "Running: Prove $PROVE_ARGS"
-
-            prove $PROVE_ARGS
- 
+            perl Build.PL ${{ inputs.build-pl-args }}
+            ./Build test ${{ inputs.build-pl-test-args }}

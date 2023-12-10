@@ -24,33 +24,50 @@ ARG RELEASE="<RELEASE>"
 # just a clever self-baked trick to check if runnning outside OBS.
 # When not running in OBS, add d-l-perl repo
 
-RUN bash -c "test '$RELEASE' == '<''RELEASE''>'" \
-    && ( \
+RUN bash -c "test '$RELEASE' != '<''RELEASE''>'" \
+    || ( \
         zypper -qn ar --enable https://download.opensuse.org/repositories/devel:/languages:/perl/openSUSE_Tumbleweed/devel:languages:perl.repo \
-        zypper -qn ar --enable https://download.opensuse.org/repositories/home:/josegomezr:/perl-toolkit/openSUSE_Tumbleweed/home:josegomezr:perl-toolkit.repo \
+        && zypper -qn ar --enable https://download.opensuse.org/repositories/home:/josegomezr:/perl-toolkit/openSUSE_Tumbleweed/home:josegomezr:perl-toolkit.repo \
         && zypper -qn --gpg-auto-import-keys ref \
-        ) \
-    \
-    || true
+    )
 
-RUN zypper -qn in -y --capability 'perl(Code::TidyAll)' 'perl(Devel::Cover)' \
-    'perl(Devel::Cover::Report::Codecov)' \
-    'perl(Devel::Cover::Report::Coveralls)' \
-    'perl(File::Temp)' 'perl(List::MoreUtils)' 'perl(Module::Build)' \
-    'perl(Pod::Coverage::TrustPod)' \
-    'perl(TAP::Formatter::GitHubActions)' \
-    'perl(Test2::Bundle::Extended)' \
-    'perl(Test2::Plugin::NoWarnings)' 'perl(Test2::Suite)' \
-    'perl(Test2::Tools::Explain)' 'perl(Test::Builder)' \
-    'perl(Test::CPAN::Meta)' 'perl(Test::Deep)' \
-    'perl(Test::Differences)' 'perl(Test::EOL)' 'perl(Test::Fatal)' \
-    'perl(Test::MinimumVersion)' 'perl(Test::MockModule)' \
-    'perl(Test::Most)' 'perl(Test::More)' \
-    'perl(Test::Needs)' 'perl(Perl::Critic)' 'perl(Test::Pod)' \
-    'perl(Test::Pod::Coverage)' 'perl(Test::Portability::Files)' \
-    'perl(Test::RequiresInternet)' 'perl(Test::Spelling)' \
-    'perl(Test::Synopsis)' 'perl(Test::Version)' \
-    'perl(Test::Warnings)' 'perl(Pod::Readme)' 'perl(Dist::Zilla)'
+RUN zypper -qn in -y --capability \
+   'perl(Devel::Cover)' \
+   'perl(Devel::Cover::Report::Codecov)' \
+   'perl(Devel::Cover::Report::Coveralls)' \
+   'perl(File::Temp)' \
+   'perl(List::MoreUtils)' \
+   'perl(Module::Build)' \
+   'perl(Perl::Critic)' \
+   'perl(Perl::Critic::Community)' \
+   'perl(Pod::Coverage::TrustPod)' \
+   'perl(Pod::Readme)' \
+   'perl(TAP::Formatter::GitHubActions)' \
+   'perl(Test2::Bundle::Extended)' \
+   'perl(Test2::Plugin::NoWarnings)' \
+   'perl(Test2::Suite)' \
+   'perl(Test2::Tools::Explain)' \
+   'perl(Test::Builder)' \
+   'perl(Test::Code::TidyAll)' \
+   'perl(Test::CPAN::Meta)' \
+   'perl(Test::Deep)' \
+   'perl(Test::Differences)' \
+   'perl(Test::EOL)' \
+   'perl(Test::Fatal)' \
+   'perl(Test::MinimumVersion)' \
+   'perl(Test::MockModule)' \
+   'perl(Test::Most)' \
+   'perl(Test::More)' \
+   'perl(Test::Needs)' \
+   'perl(Test::Pod)' \
+   'perl(Test::Pod::Coverage)' \
+   'perl(Test::Portability::Files)' \
+   'perl(Test::RequiresInternet)' \
+   'perl(Test::Spelling)' \
+   'perl(Test::Synopsis)' \
+   'perl(Test::Version)' \
+   'perl(Test::Warnings)' \
+   'perl(Dist::Zilla)'
 
 COPY artifacts/entrypoint.sh /entrypoint.sh
 COPY artifacts/perl-problem-matcher.json /usr/share/gh-actions/perl-problem-matcher.json

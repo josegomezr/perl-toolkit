@@ -1,10 +1,20 @@
 #!/bin/sh -l
 
-mkdir -p $GITHUB_WORKSPACE/.perl-gha/
+PERLTESTER_WORKSPACE="${GITHUB_WORKSPACE}/.perl-tester"
 
-cp /usr/share/gh-actions/perl-problem-matcher.json $GITHUB_WORKSPACE/.perl-gha/perl-problem-matcher.json
+mkdir -p $PERLTESTER_WORKSPACE/
 
-echo "::add-matcher::$GITHUB_WORKSPACE/.perl-gha/perl-problem-matcher.json"
+cp /usr/share/gh-actions/perl-problem-matcher.json "${PERLTESTER_WORKSPACE}/perl-problem-matcher.json"
+
+echo "::add-matcher::${PERLTESTER_WORKSPACE}/perl-problem-matcher.json"
 echo 'Problem Matcher installed'
 
-exec $@
+export CPAN_LOCAL_LIB="${PERLTESTER_WORKSPACE}/.perl-tester"
+eval $(perl -Mlocal::lib=$CPAN_LOCAL_LIB)
+
+touch "$GITHUB_WORKSPACE/${GITHUB_JOB}_${GITHUB_ACTION}"
+
+if [[ ! -z "$INPUT_ARGS" ]]; then
+	eval "$INPUT_ARGS"
+	exit $?
+fi
