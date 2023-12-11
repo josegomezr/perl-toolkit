@@ -1,7 +1,10 @@
 # Built in OBS in: https://build.opensuse.org/package/show/home:josegomezr:perl-toolkit/tester-perl
 # available for pulling at: registry.opensuse.org/home/josegomezr/perl-toolkit/containers-tw/tester-perl:latest
 
-#!BuildTag: tester-perl
+#!BuildTag: perl-tooklit/tester-perl:latest 
+#!BuildTag: perl-tooklit/tester-perl:<RELEASE>
+#!BuildVersion: 0.1.1
+#!BuildRelease: <RELEASE>
 #!UseOBSRepositories
 
 # base-perl here refers to ../base-perl/Dockerfile.
@@ -18,10 +21,20 @@ ARG IMAGE_BASE=base-perl:latest
 FROM $IMAGE_BASE
 ARG RELEASE="<RELEASE>"
 
+# Define labels according to https://en.opensuse.org/Building_derived_containers
+# labelprefix=cyou.mecannot.perl-toolkit
+LABEL org.opencontainers.image.title="perl-toolkit perl-tester"
+LABEL org.opencontainers.image.description="perl-toolkit perl-tester"
+LABEL org.opencontainers.image.version="0.1.1"
+LABEL org.opencontainers.image.url="https://github.com/josegomezr/perl-toolkit"
+LABEL org.opencontainers.image.vendor="José D. Gómez R."
+LABEL org.opensuse.release-stage="released"
+# endlabelprefix
+
 # Heavily inspired in: https://hub.docker.com/r/perldocker/perl-tester/
 # although not all dependencies listed there are available in d-l-perl repo.
 
-RUN test -f /usr/local/sbin/obs-docker-support && true || ( \
+RUN test -f /usr/local/sbin/obs-docker-support || ( \
         zypper -qn ar --enable https://download.opensuse.org/repositories/devel:/languages:/perl/openSUSE_Tumbleweed/devel:languages:perl.repo \
         && zypper -qn ar --enable https://download.opensuse.org/repositories/home:/josegomezr:/perl-toolkit/openSUSE_Tumbleweed/home:josegomezr:perl-toolkit.repo \
         && zypper -qn --gpg-auto-import-keys ref \
