@@ -21,11 +21,7 @@ ARG RELEASE="<RELEASE>"
 # Heavily inspired in: https://hub.docker.com/r/perldocker/perl-tester/
 # although not all dependencies listed there are available in d-l-perl repo.
 
-# just a clever self-baked trick to check if runnning outside OBS.
-# When not running in OBS, add d-l-perl repo
-
-RUN bash -c "test '$RELEASE' != '<''RELEASE''>'" \
-    || ( \
+RUN test -f /usr/local/sbin/obs-docker-support && true || ( \
         zypper -qn ar --enable https://download.opensuse.org/repositories/devel:/languages:/perl/openSUSE_Tumbleweed/devel:languages:perl.repo \
         && zypper -qn ar --enable https://download.opensuse.org/repositories/home:/josegomezr:/perl-toolkit/openSUSE_Tumbleweed/home:josegomezr:perl-toolkit.repo \
         && zypper -qn --gpg-auto-import-keys ref \
