@@ -1,9 +1,9 @@
 # Built in OBS in: https://build.opensuse.org/package/show/home:josegomezr:perl-toolkit/tester-perl
 # available for pulling at: registry.opensuse.org/home/josegomezr/perl-toolkit/containers-tw/perl-tooklit/tester-perl:latest
 
-#!BuildTag: perl-tooklit/tester-perl:latest 
-#!BuildTag: perl-tooklit/tester-perl:<RELEASE>
-#!BuildVersion: 0.1.1
+#!BuildTag: perl-tooklit/tester-perl:v1
+#!BuildTag: perl-tooklit/tester-perl:<VERSION>-<RELEASE>
+#!BuildVersion: v1
 #!BuildRelease: <RELEASE>
 #!UseOBSRepositories
 
@@ -23,9 +23,10 @@ ARG RELEASE="<RELEASE>"
 
 # Define labels according to https://en.opensuse.org/Building_derived_containers
 # labelprefix=cyou.mecannot.perl-toolkit
-LABEL org.opencontainers.image.title="perl-toolkit perl-tester"
-LABEL org.opencontainers.image.description="perl-toolkit perl-tester"
-LABEL org.opencontainers.image.version="0.1.1"
+LABEL org.opencontainers.image.title="perl base image for your CI/CD"
+LABEL org.opencontainers.image.description="Includes a good set of dependencies for running unit tests"
+LABEL org.opencontainers.image.version="<VERSION>"
+LABEL org.opencontainers.image.release="<RELEASE>"
 LABEL org.opencontainers.image.url="https://github.com/josegomezr/perl-toolkit"
 LABEL org.opencontainers.image.vendor="José D. Gómez R."
 LABEL org.opensuse.release-stage="released"

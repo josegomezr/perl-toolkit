@@ -31,7 +31,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install dependencies with cpanm
-        uses: docker://registry.opensuse.org/home/josegomezr/perl-toolkit/containers-tw/perl-tooklit/tester-perl:latest
+        uses: docker://registry.opensuse.org/home/josegomezr/perl-toolkit/containers-tw/perl-tooklit/tester-perl:v1
         with:
           args: |
             if [[ -f cpanfile ]]; then
@@ -39,7 +39,7 @@ jobs:
             fi
 
       - name: Run Prove
-        uses: docker://registry.opensuse.org/home/josegomezr/perl-toolkit/containers-tw/perl-tooklit/tester-perl:latest
+        uses: docker://registry.opensuse.org/home/josegomezr/perl-toolkit/containers-tw/perl-tooklit/tester-perl:v1
         with:
           args: |
             ADDITIONAL_PER5LIB="${{ inputs.prepend-perl5lib-env }}"
