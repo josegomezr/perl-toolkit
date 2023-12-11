@@ -1,5 +1,5 @@
 # Built in OBS in: https://build.opensuse.org/package/show/home:josegomezr:perl-toolkit/tester-perl
-# available for pulling at: registry.opensuse.org/home/josegomezr/perl-toolkit/containers-tw/tester-perl:latest
+# available for pulling at: registry.opensuse.org/home/josegomezr/perl-toolkit/containers-tw/perl-tooklit/tester-perl:latest
 
 #!BuildTag: perl-tooklit/tester-perl:latest 
 #!BuildTag: perl-tooklit/tester-perl:<RELEASE>

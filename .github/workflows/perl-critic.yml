@@ -26,7 +26,7 @@ jobs:
         working-directory: "${{ inputs.working-directory }}"
 
     container:
-      image: registry.opensuse.org/home/josegomezr/perl-toolkit/containers-tw/tester-perl:latest
+      image: registry.opensuse.org/home/josegomezr/perl-toolkit/containers-tw/perl-tooklit/tester-perl:latest
 
     # run release flow only if the triggering branch starts with "release/"
     steps:
